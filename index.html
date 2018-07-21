@@ -46,7 +46,7 @@
         </video>
     </div>
     <script type='text/javascript'>
-        var API_URL = 'https://a.4cdn.org/gif/catalog.json';
+        var API_URL = 'https://cors-anywhere.herokuapp.com/https://a.4cdn.org/gif/catalog.json';
         var PASSORDEM = 'avangsert';
         var TYTTELEM = 'Putte?';
         var FARGEM = ['yellow', 'pink', 'red', 'blue', 'yellowgreen'];
@@ -83,7 +83,7 @@
         };
 
         var hentKomplexemByldem = function (komplexemObjektem) {
-            var komplexemAPI = `https://a.4cdn.org/gif/thread/${komplexemObjektem.no}.json`;
+            var komplexemAPI = `https://cors-anywhere.herokuapp.com/https://a.4cdn.org/gif/thread/${komplexemObjektem.no}.json`;
             return new Promise(function (resolve) {
                 $.ajax(
                     {
