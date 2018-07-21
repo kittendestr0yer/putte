@@ -18,6 +18,7 @@
             text-align: center;
             font-family: 'Comic Sans MS', sans-serif;
         }
+
         #inspirasjon span {
             font-size: 30px;
             text-shadow: 1px 0px black;
@@ -33,7 +34,7 @@
 </head>
 
 <body>
-    <iframe width="1" height="1" src="https://www.youtube.com/embed/M8PaeEhBPqY?autoplay=1&amp;loop=1&amp;playlist=M8PaeEhBPqY"
+    <iframe width="1" height="1" src="http://www.youtube.com/embed/M8PaeEhBPqY?autoplay=1&amp;loop=1&amp;playlist=M8PaeEhBPqY"
         frameborder="0" allowFullScreen=""></iframe>
     <div id='inspirasjon'>Putte?</div>
     <marquee behavior='alternate'>
@@ -59,7 +60,10 @@
                         url: API_URL,
                         method: 'GET',
                         dataType: 'json',
-                        crossDomain: true
+                        crossDomain: true,
+                        headers: {
+                            'Access-Control-Allow-Origin': '*'
+                        }
                     })
                     .done(function (data) {
                         resolve(data);
@@ -86,7 +90,10 @@
                         url: komplexemAPI,
                         method: 'GET',
                         dataType: 'json',
-                        crossDomain: true
+                        crossDomain: true,
+                        headers: {
+                            'Access-Control-Allow-Origin': '*'
+                        }
                     })
                     .done(function (data) {
                         resolve(data);
