@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8' />
+    <title>HKPHTÅGMMS USB1</title>
+    <script src='https://code.jquery.com/jquery-3.3.1.min.js' integrity='sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8='
+        crossorigin='anonymous'></script>
+    <style>
+        video {
+            max-width: 50%;
+            max-height: 50%;
+            min-width: 50%;
+            min-height: 50%;
+        }
+
+        body {
+            text-align: center;
+            font-family: 'Comic Sans MS', sans-serif;
+        }
+        #inspirasjon span {
+            font-size: 30px;
+            text-shadow: 1px 0px black;
+        }
+
+        button {
+            border: 30px dotted red;
+            border-radius: 200px 100px 50px 1px;
+            box-shadow: 5px 10px greenyellow;
+            text-shadow: 50px 1px pink;
+        }
+    </style>
+</head>
+
+<body>
+    <iframe width="1" height="1" src="https://www.youtube.com/embed/M8PaeEhBPqY?autoplay=1&amp;loop=1&amp;playlist=M8PaeEhBPqY"
+        frameborder="0" allowFullScreen=""></iframe>
+    <div id='inspirasjon'>Putte?</div>
+    <marquee behavior='alternate'>
+        <button type='button' onclick='javascript:gjorAltSammem()'>Gi meg mer da</button>
+    </marquee>
+    <br>
+    <div id='hvaserdupaa'>
+        <video autoplay muted loop id='hvavilduda'>
+        </video>
+    </div>
+    <script type='text/javascript'>
+        var API_URL = 'https://a.4cdn.org/gif/catalog.json';
+        var PASSORDEM = 'avangsert';
+        var TYTTELEM = 'Putte?';
+        var FARGEM = ['yellow', 'pink', 'red', 'blue', 'yellowgreen'];
+
+
+
+        var getContent = function () {
+            return new Promise(function (resolve) {
+                $.ajax(
+                    {
+                        url: API_URL,
+                        method: 'GET',
+                        dataType: 'json',
+                        crossDomain: true
+                    })
+                    .done(function (data) {
+                        resolve(data);
+                    })
+                    .fail(function () { alert('hold kjeft potethore') });
+            });
+        };
+
+        var sorterOgHentKomplexemNSFW = function (dataKomplexem) {
+            var alleTraadem = [];
+            dataKomplexem.map(function (enSydem, index) {
+                alleTraadem = alleTraadem.concat(enSydem.threads);
+            });
+
+            var komplexem = Math.floor(1 + Math.random() * (alleTraadem.length - 1));
+            return alleTraadem[komplexem];
+        };
+
+        var hentKomplexemByldem = function (komplexemObjektem) {
+            var komplexemAPI = `https://a.4cdn.org/gif/thread/${komplexemObjektem.no}.json`;
+            return new Promise(function (resolve) {
+                $.ajax(
+                    {
+                        url: komplexemAPI,
+                        method: 'GET',
+                        dataType: 'json',
+                        crossDomain: true
+                    })
+                    .done(function (data) {
+                        resolve(data);
+                    })
+                    .fail(function () { alert('hold kjeft jeg fant dem ikke drikk vestkyst') });
+            });
+        };
+
+        var visMegForFaen = function (komplexemTraadem) {
+            var alleKomplexemPostem = komplexemTraadem.posts.filter(function (komplexemElementym) {
+                return komplexemElementym.hasOwnProperty('ext') && komplexemElementym.ext.indexOf('.webm') !== -1;
+            });
+            var eeeeenKomplexemBlantAlleKomplexemPostem = alleKomplexemPostem[Math.floor(Math.random() * alleKomplexemPostem.length)];
+            var lenkem = `https://is3.4chan.org/gif/${eeeeenKomplexemBlantAlleKomplexemPostem.tim}${eeeeenKomplexemBlantAlleKomplexemPostem.ext}`;
+            document.getElementById('hvavilduda').setAttribute('src', lenkem);
+        }
+
+        var gjorAltSammem = function () {
+            $('body').css('background', FARGEM[Math.floor(Math.random() * FARGEM.length)]);
+            $('button').css('background', FARGEM[Math.floor(Math.random() * FARGEM.length)]);
+            $('button').css('border-color', FARGEM[Math.floor(Math.random() * FARGEM.length)]);
+            $('button').css('color', FARGEM[Math.floor(Math.random() * FARGEM.length)]);
+            $('#inspirasjon').html(TYTTELEM.split('').map(function (bokstavem) {
+                return `<span style='color: ${FARGEM[Math.floor(Math.random() * FARGEM.length)]};'>${bokstavem}</span>`;
+            }).join(''));
+
+            getContent()
+                .then(sorterOgHentKomplexemNSFW)
+                .then(hentKomplexemByldem)
+                .then(visMegForFaen);
+        };
+
+        gjorAltSammem();
+
+    </script>
+</body>
+
+</html>
