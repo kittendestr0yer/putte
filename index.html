@@ -22,6 +22,7 @@
         #inspirasjon span {
             font-size: 30px;
             text-shadow: 1px 0px black;
+            display: inline-block;
         }
 
         button {
@@ -117,7 +118,7 @@
             $('button').css('border-color', FARGEM[Math.floor(Math.random() * FARGEM.length)]);
             $('button').css('color', FARGEM[Math.floor(Math.random() * FARGEM.length)]);
             $('#inspirasjon').html(TYTTELEM.split('').map(function (bokstavem) {
-                return `<span style='color: ${FARGEM[Math.floor(Math.random() * FARGEM.length)]};'>${bokstavem}</span>`;
+                return `<span style='transform: rotate(${Math.floor(Math.random() * 20) -10}deg); color: ${FARGEM[Math.floor(Math.random() * FARGEM.length)]};'>${bokstavem}</span>`;
             }).join(''));
 
             getContent()
