@@ -7,11 +7,15 @@
     <script src='https://code.jquery.com/jquery-3.3.1.min.js' integrity='sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8='
         crossorigin='anonymous'></script>
     <style>
-        video {
+        video, #jada {
             max-width: 50%;
             max-height: 50%;
             min-width: 50%;
             min-height: 50%;
+        }
+
+        #jada {
+            display: none;
         }
 
         body {
@@ -35,8 +39,8 @@
 </head>
 
 <body>
-    <iframe width="1" height="1" src="http://www.youtube.com/embed/M8PaeEhBPqY?autoplay=1&amp;loop=1&amp;playlist=M8PaeEhBPqY"
-        frameborder="0" allowFullScreen=""></iframe>
+    <iframe width="1" height="1" src="https://www.youtube.com/embed/M8PaeEhBPqY?autoplay=1&loop=1&playlist=M8PaeEhBPqY"
+        frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
     <div id='inspirasjon'>Putte?</div>
     <marquee behavior='alternate'>
         <button type='button' onclick='javascript:gjorAltSammem()'>Gi meg mer da</button>
@@ -45,30 +49,31 @@
     <div id='hvaserdupaa'>
         <video autoplay muted loop id='hvavilduda'>
         </video>
+        <img id='jada' />
     </div>
     <!-- hitwebcounter Code START -->
     <a href="http://www.hitwebcounter.com" target="_blank">
         <img title="" Alt="" border="0" id="hvormangeda">
     </a>
     <script type='text/javascript'>
-        var API_URL = 'https://cors-anywhere.herokuapp.com/https://a.4cdn.org/gif/catalog.json';
+        var API_URL = 'http://cors-anywhere.herokuapp.com/http://a.4cdn.org/gif/catalog.json';
         var PASSORDEM = 'avangsert';
         var TYTTELEM = 'Putte?';
         var FARGEM = ['yellow', 'pink', 'red', 'blue', 'yellowgreen'];
         var BRA_URL = 'http://hitwebcounter.com/counter/counter.php?page=6975323&style=0044&nbdigits=6&type=page&initCount=0'
 
+        if (/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream) {
+            var FILTEM = ['.gif'];
+        } else {
+            var FILTEM = ['.webm', '.gif'];
+        }
 
         var getContent = function () {
             return new Promise(function (resolve) {
                 $.ajax(
                     {
                         url: API_URL,
-                        method: 'GET',
-                        dataType: 'json',
-                        crossDomain: true,
-                        headers: {
-                            'Access-Control-Allow-Origin': 'https://boards.4chan.org'
-                        }
+                        method: 'GET'
                     })
                     .done(function (data) {
                         resolve(data);
@@ -88,17 +93,12 @@
         };
 
         var hentKomplexemByldem = function (komplexemObjektem) {
-            var komplexemAPI = `https://cors-anywhere.herokuapp.com/https://a.4cdn.org/gif/thread/${komplexemObjektem.no}.json`;
+            var komplexemAPI = `http://cors-anywhere.herokuapp.com/http://a.4cdn.org/gif/thread/${komplexemObjektem.no}.json`;
             return new Promise(function (resolve) {
                 $.ajax(
                     {
                         url: komplexemAPI,
-                        method: 'GET',
-                        dataType: 'json',
-                        crossDomain: true,
-                        headers: {
-                            'Access-Control-Allow-Origin': 'https://a.4cdn.org'
-                        }
+                        method: 'GET'
                     })
                     .done(function (data) {
                         resolve(data);
@@ -109,11 +109,21 @@
 
         var visMegForFaen = function (komplexemTraadem) {
             var alleKomplexemPostem = komplexemTraadem.posts.filter(function (komplexemElementym) {
-                return komplexemElementym.hasOwnProperty('ext') && komplexemElementym.ext.indexOf('.webm') !== -1;
+                return komplexemElementym.hasOwnProperty('ext') && (FILTEM.indexOf(komplexemElementym.ext) !== -1);
             });
             var eeeeenKomplexemBlantAlleKomplexemPostem = alleKomplexemPostem[Math.floor(Math.random() * alleKomplexemPostem.length)];
-            var lenkem = `https://is3.4chan.org/gif/${eeeeenKomplexemBlantAlleKomplexemPostem.tim}${eeeeenKomplexemBlantAlleKomplexemPostem.ext}`;
-            document.getElementById('hvavilduda').setAttribute('src', lenkem);
+            var lenkem = `http://i.4cdn.org/gif/${eeeeenKomplexemBlantAlleKomplexemPostem.tim}${eeeeenKomplexemBlantAlleKomplexemPostem.ext}`;
+
+            if (eeeeenKomplexemBlantAlleKomplexemPostem.ext.indexOf('.gif') !== -1) {
+                document.getElementById('hvavilduda').setAttribute('src', lenkem);
+                $('#hvavilduda').hide();
+                $('#jada').attr('src', lenkem);
+                $('#jada').css('display', 'inline-block');
+            } else {
+                $('#jada').hide();
+                $('#hvavilduda').attr('src', lenkem);
+                $('#hvavilduda').css('display', 'inline-block');
+            }
         }
 
         var gjorAltSammem = function () {
