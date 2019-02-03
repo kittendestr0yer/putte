@@ -59,6 +59,7 @@
     <script type='text/javascript'>
         var API_URL = 'http://cors-anywhere.herokuapp.com/http://a.4cdn.org/gif/catalog.json';
         var PASSORDEM = 'avangsert';
+		var LYLLEHARAM = ['skolen', 'gore', 'rekt', 'war', 'gondola', 'ygyl', 'ylyl'];
         var TYTTELEM = 'Putte?';
         var FARGEM = ['yellow', 'pink', 'red', 'blue', 'yellowgreen'];
         var BRA_URL = 'http://hitwebcounter.com/counter/counter.php?page=6975323&style=0044&nbdigits=6&type=page&initCount=0'
@@ -88,9 +89,15 @@
             dataKomplexem.map(function (enSydem, index) {
                 alleTraadem = alleTraadem.concat(enSydem.threads);
             });
+	        var nestemAlleTraadem = [];
+            alleTraadem.map(function (traad, index) {
+				if (!(LYLLEHARAM.some((ordem) => (traad.com || '').toLowerCase().indexOf(ordem) > -1))) {
+                	nestemAlleTraadem.push(traad);
+				}
+            });
 
-            var komplexem = Math.floor(1 + Math.random() * (alleTraadem.length - 1));
-            return alleTraadem[komplexem];
+            var komplexem = Math.floor(1 + Math.random() * (nestemAlleTraadem.length - 1));
+            return nestemAlleTraadem[komplexem];
         };
 
         var hentKomplexemByldem = function (komplexemObjektem) {
@@ -115,6 +122,7 @@
             var eeeeenKomplexemBlantAlleKomplexemPostem = alleKomplexemPostem[Math.floor(Math.random() * alleKomplexemPostem.length)];
             var lenkem = `${eeeeenKomplexemBlantAlleKomplexemPostem.tim}${eeeeenKomplexemBlantAlleKomplexemPostem.ext}`;
 
+            console.log(`SAUS: http://boards.4chan.org/gif/thread/${komplexemTraadem.posts[0].no}#p${eeeeenKomplexemBlantAlleKomplexemPostem.no}`);
             if (eeeeenKomplexemBlantAlleKomplexemPostem.ext.indexOf('.gif') !== -1) {
                 document.getElementById('hvavilduda').setAttribute('src', lenkem);
                 $('#hvavilduda').hide();
