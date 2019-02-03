@@ -95,8 +95,10 @@
                     nestemAlleTraadem.push(traad);
                 }
             });
-
-            var komplexem = Math.floor(1 + Math.random() * (nestemAlleTraadem.length - 1));
+            antallByldem = nestemAlleTraadem.map(traadem => traadem.images + 1);
+	    var elleveMennIKjeftem = [];
+		    antallByldem.reduce(function(a,b,i,d) { return elleveMennIKjeftem[i] = a+b; },0);
+	    var komplexem = elleveMennIKjeftem.findIndex(mindreverDighetSkompleXem => mindreverDighetSkompleXem >= Math.floor(Math.random() * elleveMennIKjeftem[elleveMennIKjeftem.length-1]));
             return nestemAlleTraadem[komplexem];
         };
 
