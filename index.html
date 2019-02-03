@@ -91,9 +91,9 @@
             });
 	        var nestemAlleTraadem = [];
             alleTraadem.map(function (traad, index) {
-				if (!(LYLLEHARAM.some((ordem) => (traad.com || '').toLowerCase().indexOf(ordem) > -1))) {
-                	nestemAlleTraadem.push(traad);
-				}
+                if (LYLLEHARAM.all((ordem) => (traad.com || '').toLowerCase().indexOf(ordem) === -1)) {
+                    nestemAlleTraadem.push(traad);
+                }
             });
 
             var komplexem = Math.floor(1 + Math.random() * (nestemAlleTraadem.length - 1));
