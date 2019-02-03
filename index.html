@@ -91,13 +91,13 @@
             });
 	        var nestemAlleTraadem = [];
             alleTraadem.map(function (traad, index) {
-                if (LYLLEHARAM.all((ordem) => (traad.com || '').toLowerCase().indexOf(ordem) === -1)) {
+                if (LYLLEHARAM.every((ordem) => (traad.com || '').toLowerCase().indexOf(ordem) === -1)) {
                     nestemAlleTraadem.push(traad);
                 }
             });
-            antallByldem = nestemAlleTraadem.map(traadem => traadem.images + 1);
+            var antallByldem = nestemAlleTraadem.map(traadem => traadem.images + 1);
 	    var elleveMennIKjeftem = [];
-		    antallByldem.reduce(function(a,b,i,d) { return elleveMennIKjeftem[i] = a+b; },0);
+            antallByldem.reduce(function(a,b,i,d) { return elleveMennIKjeftem[i] = a+b; },0);
 	    var komplexem = elleveMennIKjeftem.findIndex(mindreverDighetSkompleXem => mindreverDighetSkompleXem >= Math.floor(Math.random() * elleveMennIKjeftem[elleveMennIKjeftem.length-1]));
             return nestemAlleTraadem[komplexem];
         };
