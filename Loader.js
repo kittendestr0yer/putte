@@ -1,6 +1,7 @@
 /**
  * Modified version of
- * https://stackoverflow.com/questions/14218607/javascript-loading-progress-of-an-image 
+ * https://stackoverflow.com/questions/14218607/javascript-loading-progress-of-an-image
+ * Ole Dakøje edition
  */
 var Loader = function(url, callbacks) {
 	var xmlHTTP = new XMLHttpRequest();
