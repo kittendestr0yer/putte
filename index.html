@@ -7,16 +7,13 @@
     <title>HKPHTÅGMMS USB1</title>
     <script src='https://code.jquery.com/jquery-3.3.1.min.js' integrity='sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8='
         crossorigin='anonymous'></script>
+    <script src="Loader.js"></script>
     <style>
-        video, #jada {
+        #hvaserdupaa video, #hvaserdupaa img {
             max-width: 50%;
             max-height: 50%;
             min-width: 50%;
             min-height: 50%;
-        }
-
-        #jada {
-            display: none;
         }
 
         body {
@@ -47,10 +44,12 @@
         <button type='button' onclick='javascript:gjorAltSammem()'>Gi meg mer da</button>
     </marquee>
     <br>
+    <div id='hvorforgraaterdu'>
+        <label for="neglsaft">Lastem: </label>
+        <progress id="neglsaft" max="100" value="0"></progress>
+        <span id="hvormyeneglsaft"></span>
+    </div>
     <div id='hvaserdupaa'>
-        <video autoplay muted loop id='hvavilduda'>
-        </video>
-        <img id='jada' />
     </div>
     <!-- hitwebcounter Code START -->
     <a href="http://www.hitwebcounter.com" target="_blank">
@@ -62,7 +61,16 @@
         var LYLLEHARAM = ['skolen', 'gore', 'rekt', 'war', 'gondola', 'ygyl', 'ylyl', 'boomer', 'birb', 'bird', 'caturday', 'fight'];
         var TYTTELEM = 'Putte?';
         var FARGEM = ['yellow', 'pink', 'red', 'blue', 'yellowgreen'];
-        var BRA_URL = 'http://hitwebcounter.com/counter/counter.php?page=6975323&style=0044&nbdigits=6&type=page&initCount=0'
+        var BRA_URL = 'http://hitwebcounter.com/counter/counter.php?page=6975323&style=0044&nbdigits=6&type=page&initCount=0';
+        var KJEDELYM_INTERNVALG = 1000;
+
+        if (!Date.now) {
+            Date.now = function() { return new Date().getTime(); }
+        }
+
+        var forrigeTaesj = Date.now() - KJEDELYM_INTERNVALG;
+        var sistKatalogEndrem = "Thu, 01 Jan 1970 00:00:00 GMT";
+        var katalogSjokoladeKakem;
 
         if (/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream) {
             var FILTEM = ['.gif'];
@@ -71,49 +79,76 @@
         }
 
         var getContent = function () {
-            return new Promise(function (resolve) {
-                $.ajax(
-                    {
-                        url: API_URL,
-                        method: 'GET'
-                    })
-                    .done(function (data) {
-                        resolve(data);
-                    })
-                    .fail(function () { alert('hold kjeft potethore') });
+            $('#neglsaft').attr('value', 0);
+            $('#hvormyeneglsaft').html('0%');
+
+            return new Promise(function (resolve, reject) {
+                window.setTimeout(function() {
+                    $.ajax(
+                        {
+                            url: API_URL,
+                            method: 'GET',
+                            beforeSend: function(jqXHR) {
+                                jqXHR.setRequestHeader('If-Modified-Since', sistKatalogEndrem);
+                            }
+                        })
+                        .done(function (data, textStatus, jqXHR) {
+                            sistKatalogEndrem = jqXHR.getResponseHeader('Last-Modified');
+
+                            if (data) {
+                                katalogSjokoladeKakem = data;
+                                resolve(data);
+                            } else {
+                                resolve(katalogSjokoladeKakem);
+                            }
+                        })
+                        .always(function () {
+                            forrigeTaesj = Date.now();
+                        })
+                        .fail(function () { reject('hold kjeft potethore') });
+                }, KJEDELYM_INTERNVALG - (Date.now() - forrigeTaesj));
             });
         };
 
         var sorterOgHentKomplexemNSFW = function (dataKomplexem) {
-            var alleTraadem = [];
-            dataKomplexem.map(function (enSydem, index) {
-                alleTraadem = alleTraadem.concat(enSydem.threads);
+            return new Promise(function(resolve) {
+                var alleTraadem = [];
+                dataKomplexem.map(function (enSydem, indexem) {
+                    alleTraadem = alleTraadem.concat(enSydem.threads);
+                });
+                var nestemAlleTraadem = [];
+                alleTraadem.map(function (traad, indexem) {
+                    if (LYLLEHARAM.every((ordem) => (traad.com || '').toLowerCase().indexOf(ordem) === -1)) {
+                        nestemAlleTraadem.push(traad);
+                    }
+                });
+                var antallByldem = nestemAlleTraadem.map(traadem => traadem.images + 1);
+                var elleveMennIKjeftem = [];
+                antallByldem.reduce(function(a,b,i,d) { return elleveMennIKjeftem[i] = a+b; },0);
+                var komplexem = elleveMennIKjeftem.findIndex(mindreverDighetSkompleXem => mindreverDighetSkompleXem >= Math.floor(Math.random() * elleveMennIKjeftem[elleveMennIKjeftem.length-1]));
+                resolve(nestemAlleTraadem[komplexem]);
             });
-	        var nestemAlleTraadem = [];
-            alleTraadem.map(function (traad, index) {
-                if (LYLLEHARAM.every((ordem) => (traad.com || '').toLowerCase().indexOf(ordem) === -1)) {
-                    nestemAlleTraadem.push(traad);
-                }
-            });
-            var antallByldem = nestemAlleTraadem.map(traadem => traadem.images + 1);
-	    var elleveMennIKjeftem = [];
-            antallByldem.reduce(function(a,b,i,d) { return elleveMennIKjeftem[i] = a+b; },0);
-	    var komplexem = elleveMennIKjeftem.findIndex(mindreverDighetSkompleXem => mindreverDighetSkompleXem >= Math.floor(Math.random() * elleveMennIKjeftem[elleveMennIKjeftem.length-1]));
-            return nestemAlleTraadem[komplexem];
         };
 
         var hentKomplexemByldem = function (komplexemObjektem) {
             var komplexemAPI = `http://cors-anywhere.herokuapp.com/http://a.4cdn.org/gif/thread/${komplexemObjektem.no}.json`;
-            return new Promise(function (resolve) {
-                $.ajax(
-                    {
-                        url: komplexemAPI,
-                        method: 'GET'
-                    })
-                    .done(function (data) {
-                        resolve(data);
-                    })
-                    .fail(function () { alert('hold kjeft jeg fant dem ikke drikk vestkyst') });
+
+            return new Promise(function (resolve, reject) {
+                window.setTimeout(function() {
+                    $.ajax(
+                        {
+                            url: komplexemAPI,
+                            method: 'GET'
+                        })
+                        .done(function (data, textStatus, jqXHR) {
+                            console.log(jqXHR.getResponseHeader('Last-Modified'));
+                            resolve(data);
+                        })
+                        .always(function () {
+                            forrigeTaesj = Date.now();
+                        })
+                        .fail(function () { reject('hold kjeft jeg fant dem ikke drikk vestkyst') });
+                    }, KJEDELYM_INTERNVALG - (Date.now() - forrigeTaesj));
             });
         };
 
@@ -121,20 +156,52 @@
             var alleKomplexemPostem = komplexemTraadem.posts.filter(function (komplexemElementym) {
                 return komplexemElementym.hasOwnProperty('ext') && (FILTEM.indexOf(komplexemElementym.ext) !== -1);
             });
+            if (!alleKomplexemPostem || !alleKomplexemPostem.length) {
+                setTimeout(gjorAltSammem, 1000);
+                return;
+            }
             var eeeeenKomplexemBlantAlleKomplexemPostem = alleKomplexemPostem[Math.floor(Math.random() * alleKomplexemPostem.length)];
             var lenkem = `${eeeeenKomplexemBlantAlleKomplexemPostem.tim}${eeeeenKomplexemBlantAlleKomplexemPostem.ext}`;
 
             console.log(`SAUS: http://boards.4chan.org/gif/thread/${komplexemTraadem.posts[0].no}#p${eeeeenKomplexemBlantAlleKomplexemPostem.no}`);
+
+            var vestkystMensViVentem;
+
             if (eeeeenKomplexemBlantAlleKomplexemPostem.ext.indexOf('.gif') !== -1) {
-                document.getElementById('hvavilduda').setAttribute('src', lenkem);
-                $('#hvavilduda').hide();
-                $('#jada').attr('src', '//i.4cdn.org/gif/' + lenkem);
-                $('#jada').css('display', 'inline-block');
+                vestkystMensViVentem = new Image();
             } else {
-                $('#jada').hide();
-                $('#hvavilduda').attr('src', '//i.4cdn.org/gif/' + lenkem);
-                $('#hvavilduda').css('display', 'inline-block');
+                vestkystMensViVentem = new Video();
             }
+
+            vestkystMensViVentem.load('http://cors-anywhere.herokuapp.com/http://i.4cdn.org/gif/' + lenkem,
+            {
+                notComputable: function() {
+                    $('#neglsaft').attr('value', 0);
+                    $('#hvormyeneglsaft').html('funker ik');
+                },
+                progress: function(loaded, total) {
+                    var neglsaft = parseInt((loaded / total) * 100);
+                    $('#neglsaft').attr('value', neglsaft);
+                    $('#hvormyeneglsaft').html(neglsaft + '%');
+                },
+                complete: function(obj) {
+                    $('#hvaserdupaa').empty();
+
+                    if (obj.tagName === 'VIDEO') {
+                        obj.autoplay = true;
+                        obj.muted = true;
+                        obj.loop = true;
+                    }
+
+                    $('#hvaserdupaa').append(obj);
+                },
+                end: function() {
+                },
+                error: function() {
+                    $('#neglsaft').attr('value', 100);
+                    $('#hvormyeneglsaft').html('forfor klarte jeg ikke laste');
+                }
+            });
         }
 
         var gjorAltSammem = function () {
@@ -151,15 +218,11 @@
             getContent()
                 .then(sorterOgHentKomplexemNSFW)
                 .then(hentKomplexemByldem)
-                .then(visMegForFaen);
+                .then(visMegForFaen)
+                .catch(alert);
         };
 
-
         gjorAltSammem();
-
     </script>
-
-
 </body>
-
 </html>
