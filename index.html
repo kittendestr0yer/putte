@@ -79,7 +79,7 @@
 			var FILTEM = ['.webm', '.gif'];
 		}
 
-		var getContent = function () {
+		var isisTechnoRemix = function () {
 			$('#neglsaft').attr('value', 0);
 			$('#hvormyeneglsaft').html('0%');
 
@@ -216,7 +216,7 @@
 
 			$(document).find("#hvormangeda").attr('src', BRA_URL + '&timestamp=' + new Date().getTime());
 
-			getContent()
+			isisTechnoRemix()
 				.then(sorterOgHentKomplexemNSFW)
 				.then(hentKomplexemByldem)
 				.then(visMegForFaen)
