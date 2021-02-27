@@ -191,9 +191,6 @@
 				},
 				complete: function(obj) {
 					$('#hvaserdupaa').empty();
-					
-					var enke = new TextDecoder('utf-8');
-					obj = enke.decode(obj.contents);
 
 					if (obj.tagName === 'VIDEO') {
 						obj.autoplay = true;
