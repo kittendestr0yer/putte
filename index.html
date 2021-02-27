@@ -89,10 +89,10 @@
 					$.ajax(
 						{
 							url: API_URL,
-							method: 'GET',
+							method: 'GET'/*,
 							beforeSend: function(jqXHR) {
 								jqXHR.setRequestHeader('If-Modified-Since', sistKatalogEndrem);
-							}
+							}*/
 						})
 						.done(function (data, textStatus, jqXHR) {
 							sistKatalogEndrem = jqXHR.getResponseHeader('Last-Modified');
@@ -143,7 +143,7 @@
 							method: 'GET'
 						})
 						.done(function (data, textStatus, jqXHR) {
-							console.log(jqXHR.getResponseHeader('Last-Modified'));
+							//console.log(jqXHR.getResponseHeader('Last-Modified'));
 							resolve(data);
 						})
 						.always(function () {
