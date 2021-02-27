@@ -57,12 +57,13 @@
 	<script>
 		//var PJOXY = 'https://cors.funkerikke.wtf:12345/'
 		var PJOXY = 'https://api.allorigins.win/get?url=';
+		var PJOXY2 = 'https://api.allorigins.win/raw?url=';
 		//var PJOXY = 'https://pjoxy.fattig.cloud/'
 		var API_URL = PJOXY + encodeURIComponent('http://a.4cdn.org/gif/catalog.json');
 		var PASSORDEM = 'avangsert';
 		var LYLLEHARAM = ['skolen', 'gore', 'rekt', 'war', 'gondola', 'ygyl', 'ylyl', 'boomer', 'birb', 'bird', 'caturday', 'fight'];
 		var TYTTELEM = 'Putte?';
-		var FARGEM = ['yellow', 'pink', 'red', 'blue', 'yellowgreen'];
+		var FARGEM = ['yellow', 'hotpink', 'red', 'blue', 'yellowgreen'];
 		var BRA_URL = 'http://hitwebcounter.com/counter/counter.php?page=6975323&style=0044&nbdigits=6&type=page&initCount=0';
 		var KJEDELYM_INTERNVALG = 1000;
 
@@ -177,7 +178,7 @@
 				vestkystMensViVentem = new Video();
 			}
 
-			vestkystMensViVentem.load('http://i.4cdn.org/gif/' + lenkem,
+			vestkystMensViVentem.load(PJOXY2 + encodeURIComponent('http://i.4cdn.org/gif/' + lenkem),
 			{
 				notComputable: function() {
 					$('#neglsaft').attr('value', 0);
