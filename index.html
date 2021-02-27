@@ -134,9 +134,9 @@
 		};
 
 		var hentKomplexemByldem = function (komplexemObjektem) {
-			var komplexemAPI = PJOXY + encodeURIComponent('http://a.4cdn.org/gif/thread/${komplexemObjektem.no}.json');
+			var komplexemAPI = PJOXY + encodeURIComponent('http://a.4cdn.org/gif/thread/' + komplexemObjektem.no + '.json');
 
-			return new Promise(function (resolve, reject) {
+			return new Promise(function (braDa, blaest) {
 				window.setTimeout(function() {
 					$.ajax(
 						{
@@ -145,12 +145,12 @@
 						})
 						.done(function (data, textStatus, jqXHR) {
 							//console.log(jqXHR.getResponseHeader('Last-Modified'));
-							resolve(data);
+							braDa(data);
 						})
 						.always(function () {
 							forrigeTaesj = Date.now();
 						})
-						.fail(function () { reject('hold kjeft jeg fant dem ikke drikk vestkyst') });
+						.fail(function () { blaest('hold kjeft jeg fant dem ikke drikk vestkyst') });
 					}, KJEDELYM_INTERNVALG - (Date.now() - forrigeTaesj));
 			});
 		};
